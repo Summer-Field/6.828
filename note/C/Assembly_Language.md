@@ -108,7 +108,7 @@ word这个词的一种定义就是数据寄存器（data register）的大小
 
 #### 分段机制
 
-<img src="/Users/natsuno/Desktop/Screen Shot 2021-09-12 at 10.29.32 PM.png" alt="Screen Shot 2021-09-12 at 10.29.32 PM" style="zoom:50%;" />
+<img src="../pic/Screen Shot 2021-09-12 at 10.29.32 PM.png" alt="Screen Shot 2021-09-12 at 10.29.32 PM" style="zoom:50%;" />
 
 这张图就显示了**逻辑地址（段选择符 + 段内偏移地址）**到线性地址的转换，如果没有分页管理的话，这个线性地址就是我们最终的物理地址
 
@@ -116,7 +116,7 @@ word这个词的一种定义就是数据寄存器（data register）的大小
 
 段选择符结构：
 
-<img src="/Users/natsuno/Desktop/Screen Shot 2021-09-12 at 10.33.09 PM.png" alt="Screen Shot 2021-09-12 at 10.33.09 PM" style="zoom:50%;" />
+<img src="../pic/Screen Shot 2021-09-12 at 10.33.09 PM.png" alt="Screen Shot 2021-09-12 at 10.33.09 PM" style="zoom:50%;" />
 
 ​	TI用来指明全局描述符表GDT还是局部描述符表LDT，RPL表示请求特权级。
 

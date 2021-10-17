@@ -623,49 +623,16 @@ aligned 属性使被设置的对象占用更多的空间，相反的，使用pac
 
 ```objectivec
 struct unpacked_struct
-
-
-
 {
-
-
-
       char c;
-
-
-
       int i;
-
-
-
 };
 
-
-
-         
-
-
-
 struct packed_struct
-
-
-
 {
-
-
-
      char c;
-
-
-
      int  i;
-
-
-
      struct unpacked_struct s;
-
-
-
 }__attribute__ ((__packed__));
 ```
 
@@ -673,21 +640,7 @@ struct packed_struct
 
 ```objectivec
 在TC下：struct my{ char ch; int a;}      sizeof(int)=2;sizeof(my)=3;（紧凑模式）
-
-
-
- 
-
-
-
 在GCC下：struct my{ char ch; int a;}     sizeof(int)=4;sizeof(my)=8;（非紧凑模式）
-
-
-
- 
-
-
-
 在GCC下：struct my{ char ch; int a;}__attrubte__ ((packed))        sizeof(int)=4;sizeof(my)=5
 ```
 

@@ -166,11 +166,11 @@ PC物理内存如下：
 
 - 0x000A0000-0x000FFFFF(384KB)  --  为特殊作用的`硬件预留的内存空间`:例如**显示缓存(display buffer)**，以及一些**非易失性(non-volatile)内存**
 
-  - 最重要的部分就是**BIOS(Basic Input Output System)**  地址从0x000F0000 - 0x000FFFFF。(64KB)
+  - 最重要的部分就是**BIOS(Basic Input Output System)**  地址从0x000F0000 - 0x000FFFFF。**(64KB)**
 
   - 在早期BIOS是存储在ROM中的，但是现代的计算机中BIOS通常存储在可升级的(updatable)的闪存(flash memory)中
 
-  - **BIOS负责计算机系统的【初始化】**，例如激活显卡以及确定已安装内存的大小
+  - **BIOS负责计算机系统的【初始化】**，例如**激活显卡以及确定已安装内存的大小**
 
   - 初始化完成后，BIOS负责从正确的地方(软盘-floppy disk,硬盘，CD_ROM)等等装载OS，然后将控制权给OS
 
@@ -178,7 +178,7 @@ PC物理内存如下：
 
 尽管现在的内存已经非常大了，但是PC架构师为了**向后兼容性(backward capacompatibility)**仍然保留了原始的排布，将1M的内存给溜了出来。因此现代计算机在物理内存中从0x000A0000到0x00100000存在一个空闲地带(hole)，他将RAM分割为”低“或者”传统内存“ **（conventional memory）**（前640KB）和 扩展内存**(extended memory)**两个部分
 
-除此之外，PC32位物理地址空间的顶端的一些地址空间在所有人RAM之上，被预留给`32位PCI设备`
+除此之外，PC32位物理地址空间的顶端的一些地址空间,在所有物理RAM之上，被预留给`32位PCI设备`
 
 最近的x86处理器可以支持不止4GB的物理RAM，所以地址可扩充到0xFFFFFFFF之后。这种情况下BIOS必须拿牌留出第二个hole出来，在32可编址空间，给这些32位的设备来映射。
 
@@ -191,23 +191,7 @@ PC物理内存如下：
 ```shell
 moocos@moocos-VirtualBox:~/6.828/lab$ make gdb
 gdb -n -x .gdbinit
-GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.3) 7.7.1
-Copyright (C) 2014 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
-and "show warranty" for details.
-This GDB was configured as "x86_64-linux-gnu".
-Type "show configuration" for configuration details.
-For bug reporting instructions, please see:
-<http://www.gnu.org/software/gdb/bugs/>.
-Find the GDB manual and other documentation resources online at:
-<http://www.gnu.org/software/gdb/documentation/>.
-For help, type "help".
-Type "apropos word" to search for commands related to "word".
-+ target remote localhost:26000
-warning: A handler for the OS ABI "GNU/Linux" is not built into this configuration
-of GDB.  Attempting to continue with the default i8086 settings.
+...
 
 The target architecture is assumed to be i8086
 [f000:fff0]    0xffff0:	ljmp   $0xf000,$0xe05b
@@ -366,7 +350,7 @@ $ *physical address* = 16 * *segment* + *offset*. $
 
 #### boot.S
 
-<img src="/Users/natsuno/Desktop/Screen Shot 2021-09-13 at 3.03.26 PM.png" alt="Screen Shot 2021-09-13 at 3.03.26 PM" style="zoom:50%;" />
+<img src="../pic/Screen Shot 2021-09-13 at 3.03.26 PM.png" alt="Screen Shot 2021-09-13 at 3.03.26 PM" style="zoom:50%;" />
 
 我们可以看到CS段的选择符是0x8 = 1000（引索号为1） DS段的选择符是0x10 = 0001 0000（引索号为2）
 
@@ -510,11 +494,11 @@ gdtdesc:
 
 理论上，全局描述符表可以位于内存中的任意地址处，不必对齐。但是在进入**保护模式(只能够使用1MB)之前我们就要设置好GDT**，所以**最开始GDT必须位于前1MB内存**中。为简单起见，我们将GDT放在紧挨着主引导程序之后。因为主引导程序大小为512字节，起始物理地址是0x7C00，所以GDT的地址为0x7C00 + 512，即**物理地址0x00007E00**处，如下图所示：
 
-<img src="/Users/natsuno/Desktop/Screen Shot 2021-09-13 at 1.42.35 PM.png" alt="Screen Shot 2021-09-13 at 1.42.35 PM" style="zoom:50%;" />
+<img src="../pic/Screen Shot 2021-09-13 at 1.42.35 PM.png" alt="Screen Shot 2021-09-13 at 1.42.35 PM" style="zoom:50%;" />
 
 ##### 段描述符
 
-> <img src="/Users/natsuno/Desktop/Screen Shot 2021-09-13 at 1.43.20 PM.png" alt="Screen Shot 2021-09-13 at 1.43.20 PM" style="zoom:50%;" />
+> <img src="../pic/Screen Shot 2021-09-13 at 1.43.20 PM.png" alt="Screen Shot 2021-09-13 at 1.43.20 PM" style="zoom:50%;" />
 
 
 
@@ -537,7 +521,7 @@ gdtdesc:
 - **TYPE字段共有4位，**用于指示描述符的子类型，具体含义如下图所示：
   
 
-<img src="/Users/natsuno/Desktop/Screen Shot 2021-09-13 at 1.48.23 PM.png" alt="Screen Shot 2021-09-13 at 1.48.23 PM" style="zoom:50%;" />
+<img src="../pic/Screen Shot 2021-09-13 at 1.48.23 PM.png" alt="Screen Shot 2021-09-13 at 1.48.23 PM" style="zoom:50%;" />
 
 ​	CPU使用GDTR寄存器来保存我们GDT在内存中的位置和GDT的长度。`lgdt gdtdesc`将源操作数的值（存储在gdtdesc地址中）加载到全局描述符表寄存器中。
 
@@ -556,9 +540,9 @@ gdtdesc:
 
 - 启动步骤
 
-当CPU启动，他会加载BIOS到内存中，进行一些基本的设备检查、初始化。接着讲boot loader装载到0x7c00这个地址，并跳转到这个地址开始执行bootloader程序。
+当CPU启动，他会加载BIOS到内存中，进行一些基本的设备检查、初始化。接着讲**boot loader装载到0x7c00**这个地址，并跳转到这个地址开始执行bootloader程序。
 
-bootloader首先会执行boot.S的程序来进入保护模式，并初始化一些段寄存器，设置GDT。接着调用C程序bootmain()。他会读取kernel，并跳转到他开始执行kernel
+bootloader首先会执行**boot.S的初始化一些段寄存器，设置GDT，开启分页机制，程序来进入保护模式**。接着调用C程序bootmain()。他会读取kernel，并跳转到他开始执行kernel
 
 ```c
 #include <inc/x86.h>
@@ -575,7 +559,7 @@ bootmain(void)
 {
 	struct Proghdr *ph, *eph;
 
-	// read 1st page off disk，8个扇区的内容(ELF可执行文件)至物理内存0x100000(1MB)处
+	// read 1st page off disk，8个扇区(4K = PGSIZE)的内容(ELF可执行文件)至物理内存0x100000(1MB)处
 	readseg((uint32_t) ELFHDR, SECTSIZE*8, 0);
 
 	// is this a valid ELF?判断是否是合法的ELF格式的文件
@@ -659,6 +643,16 @@ readsect(void *dst, uint32_t offset)
 }
 
 ```
+
+
+
+###### 语法难点分析
+
+- `ph = (struct Proghdr *) ((uint8_t *) ELFHDR + ELFHDR->e_phoff);`
+   首先将ELFHDR转为 uint8_t 型指针，做加法的时候按照 byte 加，获得程序头表的起始位置，再将这个位置转为 Proghdr 型指针 ph。
+
+- `((void (*)(void)) (ELFHDR->e_entry))();`
+   将`ELFHDR->e_entry`转为一个无参数，无返回值的函数指针，并执行该函数。
 
 ##### readsec()
 
@@ -808,7 +802,7 @@ main(int ac, char **av)
 
 在这个实验中，我们可以将ELF的可执行文件理解为一个包含**装载信息的header**，紧接着是**几个程序段**（每一段都是位于固定空间连续的代码块或者数据）。boot loader并不会修改这些程序和数据，boot loader只负责将这些数据加载到内存并执行他们
 
-<img src="/Users/natsuno/Desktop/Screen Shot 2021-09-14 at 12.36.07 AM.png" alt="Screen Shot 2021-09-14 at 12.36.07 AM" style="zoom:50%;" />
+<img src="../pic/Screen Shot 2021-09-14 at 12.36.07 AM.png" alt="Screen Shot 2021-09-14 at 12.36.07 AM" style="zoom:50%;" />
 
 ELF格式的文件由一个**固定长度的头部**开始，紧随其后的是变长的Program header table，它显示了不同被装载的程序段。ELF头部被定义在inc/elf.h文件中。程序段中，我们感兴趣的是
 
@@ -999,7 +993,7 @@ The target architecture is assumed to be i386
 
 > 根本原因：BIOS会将boot loader装载到0x7c00但是如果我们错误的将boot loader链接，那么就会出现我们刚刚看到的无法加载内核的情况
 
-和bootloader不同，kernel的装载地址和链接地址不同，kernel会告诉boot loader状态kernel到比较低的地址，但是又希望kernel能够执行在比较高的地址
+和bootloader不同，kernel的装载地址和链接地址不同，kernel会告诉boot loader装载kernel到比较低的地址，但是又希望kernel能够执行在比较高的地址
 
 除了相关段的信息，ELF的头也会告诉另一个很重要的信息，那么就是`e_entry`。他是装载程序的**入口地址(entry address)**。这个区域包含着**程序中入口的链接地址**,也就是**程序在内存中将会被执行的地址**
 
@@ -1022,7 +1016,7 @@ start address 0x0010000c
 >
 > Reset the machine (exit QEMU/GDB and start them again). Examine the 8 words of memory at 0x00100000 at the point the BIOS enters the boot loader, and then again at the point the boot loader enters the kernel. Why are they different? What is there at the second breakpoint? (You do not really need to use QEMU to answer this question. Just think.)
 
-我们利用上面的相关信息可以了解到kernel最终是被装载到物理地址0x00100000，所以我们可以使用下面的质量来查看是否正确。
+我们利用上面的相关信息可以了解到kernel最终是被装载到物理地址0x00100000，所以我们可以使用下面的指令来查看是否正确。
 
 ```shell
 (gdb) b *0x7c00
@@ -1655,3 +1649,45 @@ PC启动顺序：BIOS -> boot loader -> OS
 > 当BIOS运行时，他会设置中断向量表，初始化一系列设备。初始化完成BIOS知道的一些设备后，他会去寻找一些bootable的设备（磁盘、软盘、CD_ROM）。最终到找到一个可启动的磁盘。BIOS会读取他的boot leader然后将控制权交个他。
 
 ### Part2
+
+## 附录2. ELF详细介绍
+
+- **ELF executable**
+   可看作包含加载信息的文件头 (header) 以及一些程序段 (program section)。每个程序段是相邻的代码块或数据块，需要被加载到内存的特定位置。boot loader 不更改代码或数据，只是加载到内存并且执行。
+- **ELF binary**
+   以一个定长 ELF header 开头，然后是变长的 program header，包含了所有需要加载的程序段。
+- **program section**
+   只关注三个会用到的section。
+  - .text
+     程序的可执行指令。
+  - .rodata
+     只读数据。例如 C 编译器产生的 ASCII 字符串常量。
+  - .data
+     保存程序的初始数据。例如某个有初始值的全局变量 `int x = 5;`。
+
+
+
+```ruby
+~/OS/lab/obj/kern$ objdump -h kernel
+kernel:     file format elf32-i386
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00001871  f0100000  00100000  00001000  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .rodata       00000714  f0101880  00101880  00002880  2**5
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .stab         000038d1  f0101f94  00101f94  00002f94  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  3 .stabstr      000018bb  f0105865  00105865  00006865  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  4 .data         0000a300  f0108000  00108000  00009000  2**12
+                  CONTENTS, ALLOC, LOAD, DATA
+  5 .bss          00000644  f0112300  00112300  00013300  2**5
+                  ALLOC
+  6 .comment      00000034  00000000  00000000  00013300  2**0
+                  CONTENTS, READONLY
+```
+
+重点关注的是 .text 部分的 VMA (link address) 和 LMA (load address)。link address 是开始执行该 section 的内存地址。而 load address 则顾名思义，是加载该 section 的内存地址。一般而言这两者是相同的。
+ boot loader 利用 ELF program header 来决定如何加载 section，而 program header 指定应该读取 ELF 对象的哪个部分进内存，以及应该放在哪里。
+
